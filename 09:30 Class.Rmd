@@ -1,0 +1,60 @@
+---
+title: "09/30 Class Practice"
+author: "Anna Jyi"
+date: "2024-09-30"
+output: html_document
+---
+```{r}
+library(tidyverse)
+library(dplyr)
+library(ps270data)
+```
+```{r}
+newspapers
+```
+
+Let's calculate the cross-sectional estimate 
+```{r}
+switched <- newspapers |>
+  filter(to_labour == 1) |> 
+  summarize(mean(vote_lab_97))
+
+no_change <- newspapers |>
+  filter(to_labour == 0) |>
+  summarize(mean(vote_lab_97))
+
+  switched - no_change 
+```
+
+Statistical control in R 
+```{r}
+newspapers |>
+  group_by(parent_labour, to_labour) |> 
+  summarize(avg_vote = mean(vote_lab_97)) |>
+  pivot_wider(
+    names_from = to_labour, 
+    values_from = avg_vote) |>
+  mutate(diff_by_parent = `1` - `0`)
+```
+Before and after in R
+```{r}
+newspapers |>
+  filter(to_labour == 1) |>
+  mutate(
+    vote_change = vote_lab_97 - vote_lab_92) |>
+  summarize(avg_change = mean(vote_change))
+```
+Differences in differences in R 
+```{r}
+newspapers |>
+  mutate(
+    vote_change = vote_lab_97 - vote_lab_92, 
+    to_labour = if_else(to_labour == 1, "switched", "unswitched")) |>
+  group_by(to_labour) |>
+  summarize(avg_change = mean(vote_change)) |>
+  pivot_wider(
+    names_from = to_labour,
+    values_from = avg_change) |>
+  mutate(DID = switched - unswitched)
+```
+
