@@ -7,15 +7,14 @@ output:
     self_contained: false
 ---
 
-(1) Introduction:
+(1) Introduction
 
-  Are voters hesitant to elect women into government? After Vice President Kamala Harris lost her Presidential Race many opinions about her loss had to do with the fact that she is a woman, and that the United States is generally not ready to have a woman as the President of the United States. In this study, I plan to analyze the reasons behind why women are less likely to be elected into government. I hypothesize that the consideration of a candidate's gender can either encourage or deter voters from electing women into Congress. Additionally, a woman's political party affiliation as a Democrat or Republican may positively or negatively affect the success of her campaign. The dataset that I am using analyzes every woman who has ever run for a position in the House of Representatives from 1972-2010. The explanatory variable that I will be analyzing is the rate at which women run for office versus the rate at which men run for office. The explanatory variable is coded =1 for women and =0 for men.The outcome variable is the successful election of a woman into the House of Representatives, which is coded =1 for a win and =0 for a loss. The variables are based off of Peter Bucchianeri's data set that analyzes the rate at which Republican women win primary elections but not general elections for several reasons including the hesitancy of their districts to elect a woman into office. My study will only look at the results of general elections.  
-
-(2) Data Description:
+  Are voters hesitant to elect women into government? After Vice President Kamala Harris lost her Presidential Race, many opinions about her loss had to do with the fact that she is a woman and that the United States is generally not ready to have a woman as the President. In this study, I plan to analyze the reasons behind why women are less likely to be elected into government. I hypothesize that a woman's political affiliation is a correlating factor to why there is a lack of women in Congress. Additionally, a candidate's campaign spending compared to their opponent may positively or negatively affect the success of her campaign. The dataset that I am using analyzes every woman who has ever run for a position in the House of Representatives from 1972-2010. I think that this particular research topic is interesting because this past semester I had worked on the field campaigning for Kamala Harris and Tammy Baldwin, and after having seen the results of election, it made me wonder what certain factors contributed to the reason why Baldwin was elected and Harris was not. On the broader scale, it is interesting to see the influence of personal and emotional ties to why voters choose to elect certain candidates. 
 
 ```{r}
 library(tidyverse)
 library(ggplot2)
+library(infer)
 
 wd <- "/Users/annajyi/PS270 Final Project"  
 figure_dir <- paste0("Bucchianeri_PB_Replication_Data.csv", "/Bucchianeri Data/")
@@ -25,8 +24,11 @@ if(dir.exists(figure_dir) == FALSE){
 women_gov <- read_csv("Bucchianeri Data/Bucchianeri_PB_Replication_Data.csv")
 ```
 
+(2) Data Description:
 
-## Milestone 3 
+  This particular data was collected by Harvard social scientist Peter Bucchianeri in a study to answer the question of whether the increase of women running for office would increase the number of women in Congress. His research study was conducted using a statistical model, with his independent variables being candidate quality, campaign spending, and district-specfic factors and his dependent variables being the outcome of the general elections. My own study analyzes the independent variables of Political Affiliation and State, and my dependent variable being the outcome of the general elections. 
+  Based on the results from the first visualization, in both Democratic and Republican political parties, women are shown to earn less than 50% of their candidate vote. Although this visual comparison of these two variables is not enough to support my hypothesis that a candidate's gender affects the outcome of their race, the barplot shows the relationship between the states in which a candidate ran her race and the number of general votes that a candidate received represented by a percentile. The plot shows that Democratic Women Candidates typically received a higher percentile of general election votes compared to Republican Women. What's additionally interesting is that the table indicates that the split between wins and losses within each party shows that the chances of women winning Congressional races only based on Political Party are split 50/50. This certainly indicates that more factors influence the results of general elections. 
+
 ```{r}
 women_gov_1 <- women_gov|>
   mutate(pol_aff = if_else(party == "D", "Democrat", "Republican"),
@@ -46,7 +48,13 @@ women_gov_1 |>
 
 knitr::kable(women_gov_1, digits = 3, col.names = c("Political Affiliation","Success of Race","Average Percentage of Candidate Votes"))
 ```
-## Milestone 4 - Second Visualization (Regression Model)
+
+(3) Results Section: 
+
+  In this section, I sought to explore the relationship between the state that a woman candidate ran in and the outcome of the general election. Based off of the data visualization, I had thought that since blue states like Illinois and California displayed the majority data that women who ran for Congress received more than 50% of their Candidate Vote, I thought that the state in which a woman runs in would influence the outcome of her race, especially if the state is historically red or blue (this excludes swing states). However, based on the difference in proportions between the variables 'Political Affiliation' and 'General Election Win' create a stat of 0.98 and a p-value of 1, there is little to no correlation between whether a woman's political affiliation affects her chances of winning or losing in a congressional race. 
+  I then chose to analyze one of the independent variables that Bucchianeri had analyzed in his own research, and looked at the relationship between campaign spending and general election wins. Out of 1,243 candidates, only 577 candidates had campaign funding prior their general election. I divided those 577 candidates into two groups, those who spent over 50,000 dollars in campaign funds and those who spent less than 50,000 dollars. The difference in proportions the amount spent on campaigns and general election outcomes produced a stat of 0.069 and a p-value of 1. I also analyzed the data of each campaign's opponents with the same categories of more than 50,000 dollars spent and less than 50,000 spent. The stat produced was 0.31 with a p-value of 1. Comparing the data between the candidates and their opponents, we can come to the conclusion that we have failed to reject the hypothesis from each analysis, and that the there if very little correlation between the amount of campaign spending and the outcome of a general election race. 
+
+
 ```{r}
 women_gov_2 <- women_gov |>
   ggplot(mapping = aes(x = StPOAbrv, y = GenVote)) + 
@@ -54,15 +62,47 @@ women_gov_2 <- women_gov |>
   labs(x = "Candidate's State, Abbreviated", 
        y = "Percentage of General Vote per Candidate")
 
-women_gov_2
-```
-Based on the results from the first visualization, in both Democratic and Republican political parties, women are shown to earn less than 50% of their candidate vote. Although this visual comparison of these two variables is not enough to support my hypothesis that a candidate's gender affects the outcome of their race, this regression model shows the relationship between the states in which a candidate ran her race and the number of general votes that a candidate received represented by a percentile. In certain states we can see that the majority of points plotted on the regression model indicate that women candidates in that state received 50% or more of the general votes, like in Illinois or California. Since these states are historically Democratic, this further strengthens the argument that a woman candidate's political affiliation can affect the results of her congressional race outcome.  
+women_gov_diff <- women_gov |>
+  mutate(party_1 = if_else(party == "D", "Democrat", "Republican"),
+         won_elect = if_else(GenWin == 1, "Won", "Lost"))|>
+  specify(response = won_elect, explanatory = party_1, success = "Won")|>
+  calculate(stat = "diff in props", order = c("Democrat", "Republican"))
 
-## Final Report 
-Introduction: describe the research question and main hypothesis; describe why it is important. (1-2 paragraphs) (2pts)
-Data section: 2-3 paragraphs + plot visualizing main outcome of interest. (3pts)
-Results section: plot of main analysis + regression output + 2-3 paragraphs of description and interpretation of the plots and regression (including interpreting the main coefficient of interest and describing if it is statistically significant and if we should interpret it causally). This section could be longer if you choose to include additional analyses. (8pts)
-Conclusion section: 1 paragraph (i) summarizing results and assessing the extent to which you find support for your hypothesis; (ii) describing limitations of the analysis and threats to inference (missing data, confounding, etc), and stating how you could improve your analysis if you had more time/money. (2pts)
+women_diff_p <- women_gov_diff|>
+  get_p_value(obs_stat = women_gov_diff, direction = "both")
+
+spending_diff <- women_gov|>
+  filter(!is.na(GeneralFunds))|>
+  mutate(won_elect = if_else(GenWin == 1, "Won", "Lost"),
+         gen_funds = if_else(GeneralFunds >= 50000, "More than $50,000 in Campaign Funds", "Less Than $50,000 in Campaign Funds"))|>
+  specify(response = won_elect, explanatory = gen_funds, success = "Won")|>
+  calculate(stat = "diff in props", order = c("More than $50,000 in Campaign Funds", "Less Than $50,000 in Campaign Funds")) 
+
+spending_diff_p <- spending_diff|>
+  get_p_value(obs_stat = spending_diff, direction = "both")
+
+opp_spending_diff <- women_gov|>
+  filter(!is.na(OppoGenFunds))|>
+  mutate(won_elect = if_else(GenWin == 1, "Won", "Lost"),
+         opp_gen_funds = if_else(OppoGenFunds >= 50000, "More than $50,000 in Campaign Funds", "Less Than $50,000 in Campaign Funds"))|>
+  specify(response = won_elect, explanatory = opp_gen_funds, success = "Won")|>
+  calculate(stat = "diff in props", order = c("More than $50,000 in Campaign Funds", "Less Than $50,000 in Campaign Funds"))
+
+opp_spending_diff_p <- opp_spending_diff|>
+  get_p_value(obs_stat = opp_spending_diff, direction = "both")
+
+
+knitr::kable(women_gov_diff, col.names = "Diff in Props - Political Affiliation and General Election Win")
+knitr::kable(women_diff_p, col.names = "P-Value of Political Affiliation")
+knitr::kable(spending_diff, col.names = "Diff in Props - Amount of Campaign Spending and General Election Win")
+knitr::kable(spending_diff_p, col.names = "P-Value of Candidate Spending")
+knitr::kable(opp_spending_diff, col.names = "Diff in Props - Opponent Campaign Spending and General Election Win")
+knitr::kable(opp_spending_diff_p, col.names = "P-Value of Opponent Spending")
+
+```
+
+(4) Conclusion Section 
+Throughout this research study I have attempted to analyze whether a woman candidate's political affiliation affects if they are to be elected into a congressional office. I analyzed whether their political affiliation, whether Democrat or Republican, would have affected the percentile amount of votes received in general elections. I have found that Democrat women have typically received more percentage point votes compared to Republican women, however that did not fully affirm that political affiliation determines the outcome of general election races. I then chose to analyze difference independent variables in order to narrow down factors as to why women are less represented in Congress. Basing my research off of Bucchianeri's study, I looked at the amount of Campaign Funds that each Candidate and their opponent had, and tried to find the relationship between those who spent more than 50,000 dollars and those who spent less than that to the results of their general election race. From this analysis, I have concluded that there is little correlation to campaign spending and general election results. For the majority of this study, I tried to steer clear of bias and whether voters simply did not choose a candidate because of gender in order to give the benefit of the doubt to voters across all political spectrums. It is of my belief that voters should not choose candidates simply because of gender, however that is certainly not the case in the United States. If I were to improve my analysis, I would like to perhaps include a thermomenter as to how voters in different states with different political affiliations may perceive women in government, or women in higher positions/ male-dominated fields in general. Although the two independent variables I analyzed did not produce the results of my hypothesis, perhaps other factors like candidate quality or popularity might influence why women aren't elected into office as often as men are. 
 
 
 Bucchianeri, Peter, 2017, "Replication Data for: Is Running Enough? Reconsidering the Conventional Wisdom about Women Candidates", https://doi.org/10.7910/DVN/CFPBRI, Harvard Dataverse, V1, UNF:6:8dMni+j6pH3qaRJBnPC/BQ== [fileUNF]

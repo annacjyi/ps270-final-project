@@ -1544,16 +1544,14 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 <div class="d-article">
 <ol type="1">
-<li>Introduction:</li>
+<li>Introduction</li>
 </ol>
-<p>Are voters hesitant to elect women into government? After Vice President Kamala Harris lost her Presidential Race many opinions about her loss had to do with the fact that she is a woman, and that the United States is generally not ready to have a woman as the President of the United States. In this study, I plan to analyze the reasons behind why women are less likely to be elected into government. I hypothesize that the consideration of a candidate’s gender can either encourage or deter voters from electing women into Congress. Additionally, a woman’s political party affiliation as a Democrat or Republican may positively or negatively affect the success of her campaign. The dataset that I am using analyzes every woman who has ever run for a position in the House of Representatives from 1972-2010. The explanatory variable that I will be analyzing is the rate at which women run for office versus the rate at which men run for office. The explanatory variable is coded =1 for women and =0 for men.The outcome variable is the successful election of a woman into the House of Representatives, which is coded =1 for a win and =0 for a loss. The variables are based off of Peter Bucchianeri’s data set that analyzes the rate at which Republican women win primary elections but not general elections for several reasons including the hesitancy of their districts to elect a woman into office. My study will only look at the results of general elections.</p>
-<ol start="2" type="1">
-<li>Data Description:</li>
-</ol>
+<p>Are voters hesitant to elect women into government? After Vice President Kamala Harris lost her Presidential Race, many opinions about her loss had to do with the fact that she is a woman and that the United States is generally not ready to have a woman as the President. In this study, I plan to analyze the reasons behind why women are less likely to be elected into government. I hypothesize that a woman’s political affiliation is a correlating factor to why there is a lack of women in Congress. Additionally, a candidate’s campaign spending compared to their opponent may positively or negatively affect the success of her campaign. The dataset that I am using analyzes every woman who has ever run for a position in the House of Representatives from 1972-2010. I think that this particular research topic is interesting because this past semester I had worked on the field campaigning for Kamala Harris and Tammy Baldwin, and after having seen the results of election, it made me wonder what certain factors contributed to the reason why Baldwin was elected and Harris was not. On the broader scale, it is interesting to see the influence of personal and emotional ties to why voters choose to elect certain candidates.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/tidymodels/infer'>infer</a></span><span class='op'>)</span></span>
 <span></span>
 <span><span class='va'>wd</span> <span class='op'>&lt;-</span> <span class='st'>"/Users/annajyi/PS270 Final Project"</span>  </span>
 <span><span class='va'>figure_dir</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"Bucchianeri_PB_Replication_Data.csv"</span>, <span class='st'>"/Bucchianeri Data/"</span><span class='op'>)</span></span>
@@ -1563,7 +1561,11 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span><span class='va'>women_gov</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"Bucchianeri Data/Bucchianeri_PB_Replication_Data.csv"</span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
-<h2 id="milestone-3">Milestone 3</h2>
+<ol start="2" type="1">
+<li>Data Description:</li>
+</ol>
+<p>This particular data was collected by Harvard social scientist Peter Bucchianeri in a study to answer the question of whether the increase of women running for office would increase the number of women in Congress. His research study was conducted using a statistical model, with his independent variables being candidate quality, campaign spending, and district-specfic factors and his dependent variables being the outcome of the general elections. My own study analyzes the independent variables of Political Affiliation and State, and my dependent variable being the outcome of the general elections.
+Based on the results from the first visualization, in both Democratic and Republican political parties, women are shown to earn less than 50% of their candidate vote. Although this visual comparison of these two variables is not enough to support my hypothesis that a candidate’s gender affects the outcome of their race, the barplot shows the relationship between the states in which a candidate ran her race and the number of general votes that a candidate received represented by a percentile. The plot shows that Democratic Women Candidates typically received a higher percentile of general election votes compared to Republican Women. What’s additionally interesting is that the table indicates that the split between wins and losses within each party shows that the chances of women winning Congressional races only based on Political Party are split 50/50. This certainly indicates that more factors influence the results of general elections.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>women_gov_1</span> <span class='op'>&lt;-</span> <span class='va'>women_gov</span><span class='op'>|&gt;</span></span>
@@ -1623,7 +1625,11 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </tbody>
 </table>
 </div>
-<h2 id="milestone-4---second-visualization-regression-model">Milestone 4 - Second Visualization (Regression Model)</h2>
+<ol start="3" type="1">
+<li>Results Section:</li>
+</ol>
+<p>In this section, I sought to explore the relationship between the state that a woman candidate ran in and the outcome of the general election. Based off of the data visualization, I had thought that since blue states like Illinois and California displayed the majority data that women who ran for Congress received more than 50% of their Candidate Vote, I thought that the state in which a woman runs in would influence the outcome of her race, especially if the state is historically red or blue (this excludes swing states). However, based on the difference in proportions between the variables ‘Political Affiliation’ and ‘General Election Win’ create a stat of 0.98 and a p-value of 1, there is little to no correlation between whether a woman’s political affiliation affects her chances of winning or losing in a congressional race.
+I then chose to analyze one of the independent variables that Bucchianeri had analyzed in his own research, and looked at the relationship between campaign spending and general election wins. Out of 1,243 candidates, only 577 candidates had campaign funding prior their general election. I divided those 577 candidates into two groups, those who spent over 50,000 dollars in campaign funds and those who spent less than 50,000 dollars. The difference in proportions the amount spent on campaigns and general election outcomes produced a stat of 0.069 and a p-value of 1. I also analyzed the data of each campaign’s opponents with the same categories of more than 50,000 dollars spent and less than 50,000 spent. The stat produced was 0.31 with a p-value of 1. Comparing the data between the candidates and their opponents, we can come to the conclusion that we have failed to reject the hypothesis from each analysis, and that the there if very little correlation between the amount of campaign spending and the outcome of a general election race.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>women_gov_2</span> <span class='op'>&lt;-</span> <span class='va'>women_gov</span> <span class='op'>|&gt;</span></span>
@@ -1632,16 +1638,130 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Candidate's State, Abbreviated"</span>, </span>
 <span>       y <span class='op'>=</span> <span class='st'>"Percentage of General Vote per Candidate"</span><span class='op'>)</span></span>
 <span></span>
-<span><span class='va'>women_gov_2</span></span></code></pre>
+<span><span class='va'>women_gov_diff</span> <span class='op'>&lt;-</span> <span class='va'>women_gov</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>party_1 <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/if_else.html'>if_else</a></span><span class='op'>(</span><span class='va'>party</span> <span class='op'>==</span> <span class='st'>"D"</span>, <span class='st'>"Democrat"</span>, <span class='st'>"Republican"</span><span class='op'>)</span>,</span>
+<span>         won_elect <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/if_else.html'>if_else</a></span><span class='op'>(</span><span class='va'>GenWin</span> <span class='op'>==</span> <span class='fl'>1</span>, <span class='st'>"Won"</span>, <span class='st'>"Lost"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://infer.tidymodels.org/reference/specify.html'>specify</a></span><span class='op'>(</span>response <span class='op'>=</span> <span class='va'>won_elect</span>, explanatory <span class='op'>=</span> <span class='va'>party_1</span>, success <span class='op'>=</span> <span class='st'>"Won"</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://infer.tidymodels.org/reference/calculate.html'>calculate</a></span><span class='op'>(</span>stat <span class='op'>=</span> <span class='st'>"diff in props"</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Democrat"</span>, <span class='st'>"Republican"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>women_diff_p</span> <span class='op'>&lt;-</span> <span class='va'>women_gov_diff</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://infer.tidymodels.org/reference/get_p_value.html'>get_p_value</a></span><span class='op'>(</span>obs_stat <span class='op'>=</span> <span class='va'>women_gov_diff</span>, direction <span class='op'>=</span> <span class='st'>"both"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>spending_diff</span> <span class='op'>&lt;-</span> <span class='va'>women_gov</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>GeneralFunds</span><span class='op'>)</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>won_elect <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/if_else.html'>if_else</a></span><span class='op'>(</span><span class='va'>GenWin</span> <span class='op'>==</span> <span class='fl'>1</span>, <span class='st'>"Won"</span>, <span class='st'>"Lost"</span><span class='op'>)</span>,</span>
+<span>         gen_funds <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/if_else.html'>if_else</a></span><span class='op'>(</span><span class='va'>GeneralFunds</span> <span class='op'>&gt;=</span> <span class='fl'>50000</span>, <span class='st'>"More than $50,000 in Campaign Funds"</span>, <span class='st'>"Less Than $50,000 in Campaign Funds"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://infer.tidymodels.org/reference/specify.html'>specify</a></span><span class='op'>(</span>response <span class='op'>=</span> <span class='va'>won_elect</span>, explanatory <span class='op'>=</span> <span class='va'>gen_funds</span>, success <span class='op'>=</span> <span class='st'>"Won"</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://infer.tidymodels.org/reference/calculate.html'>calculate</a></span><span class='op'>(</span>stat <span class='op'>=</span> <span class='st'>"diff in props"</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"More than $50,000 in Campaign Funds"</span>, <span class='st'>"Less Than $50,000 in Campaign Funds"</span><span class='op'>)</span><span class='op'>)</span> </span>
+<span></span>
+<span><span class='va'>spending_diff_p</span> <span class='op'>&lt;-</span> <span class='va'>spending_diff</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://infer.tidymodels.org/reference/get_p_value.html'>get_p_value</a></span><span class='op'>(</span>obs_stat <span class='op'>=</span> <span class='va'>spending_diff</span>, direction <span class='op'>=</span> <span class='st'>"both"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>opp_spending_diff</span> <span class='op'>&lt;-</span> <span class='va'>women_gov</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>OppoGenFunds</span><span class='op'>)</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>won_elect <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/if_else.html'>if_else</a></span><span class='op'>(</span><span class='va'>GenWin</span> <span class='op'>==</span> <span class='fl'>1</span>, <span class='st'>"Won"</span>, <span class='st'>"Lost"</span><span class='op'>)</span>,</span>
+<span>         opp_gen_funds <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/if_else.html'>if_else</a></span><span class='op'>(</span><span class='va'>OppoGenFunds</span> <span class='op'>&gt;=</span> <span class='fl'>50000</span>, <span class='st'>"More than $50,000 in Campaign Funds"</span>, <span class='st'>"Less Than $50,000 in Campaign Funds"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://infer.tidymodels.org/reference/specify.html'>specify</a></span><span class='op'>(</span>response <span class='op'>=</span> <span class='va'>won_elect</span>, explanatory <span class='op'>=</span> <span class='va'>opp_gen_funds</span>, success <span class='op'>=</span> <span class='st'>"Won"</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://infer.tidymodels.org/reference/calculate.html'>calculate</a></span><span class='op'>(</span>stat <span class='op'>=</span> <span class='st'>"diff in props"</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"More than $50,000 in Campaign Funds"</span>, <span class='st'>"Less Than $50,000 in Campaign Funds"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>opp_spending_diff_p</span> <span class='op'>&lt;-</span> <span class='va'>opp_spending_diff</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://infer.tidymodels.org/reference/get_p_value.html'>get_p_value</a></span><span class='op'>(</span>obs_stat <span class='op'>=</span> <span class='va'>opp_spending_diff</span>, direction <span class='op'>=</span> <span class='st'>"both"</span><span class='op'>)</span></span>
+<span></span>
+<span></span>
+<span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>women_gov_diff</span>, col.names <span class='op'>=</span> <span class='st'>"Diff in Props - Political Affiliation and General Election Win"</span><span class='op'>)</span></span></code></pre>
 </div>
-<p><img src="index_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Diff in Props - Political Affiliation and General Election Win</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0.0987756</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>women_diff_p</span>, col.names <span class='op'>=</span> <span class='st'>"P-Value of Political Affiliation"</span><span class='op'>)</span></span></code></pre>
 </div>
-<p>Based on the results from the first visualization, in both Democratic and Republican political parties, women are shown to earn less than 50% of their candidate vote. Although this visual comparison of these two variables is not enough to support my hypothesis that a candidate’s gender affects the outcome of their race, this regression model shows the relationship between the states in which a candidate ran her race and the number of general votes that a candidate received represented by a percentile. In certain states we can see that the majority of points plotted on the regression model indicate that women candidates in that state received 50% or more of the general votes, like in Illinois or California. Since these states are historically Democratic, this further strengthens the argument that a woman candidate’s political affiliation can affect the results of her congressional race outcome.</p>
-<h2 id="final-report">Final Report</h2>
-<p>Introduction: describe the research question and main hypothesis; describe why it is important. (1-2 paragraphs) (2pts)
-Data section: 2-3 paragraphs + plot visualizing main outcome of interest. (3pts)
-Results section: plot of main analysis + regression output + 2-3 paragraphs of description and interpretation of the plots and regression (including interpreting the main coefficient of interest and describing if it is statistically significant and if we should interpret it causally). This section could be longer if you choose to include additional analyses. (8pts)
-Conclusion section: 1 paragraph (i) summarizing results and assessing the extent to which you find support for your hypothesis; (ii) describing limitations of the analysis and threats to inference (missing data, confounding, etc), and stating how you could improve your analysis if you had more time/money. (2pts)</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">P-Value of Political Affiliation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>spending_diff</span>, col.names <span class='op'>=</span> <span class='st'>"Diff in Props - Amount of Campaign Spending and General Election Win"</span><span class='op'>)</span></span></code></pre>
+</div>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Diff in Props - Amount of Campaign Spending and General Election Win</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0.0697483</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>spending_diff_p</span>, col.names <span class='op'>=</span> <span class='st'>"P-Value of Candidate Spending"</span><span class='op'>)</span></span></code></pre>
+</div>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">P-Value of Candidate Spending</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>opp_spending_diff</span>, col.names <span class='op'>=</span> <span class='st'>"Diff in Props - Opponent Campaign Spending and General Election Win"</span><span class='op'>)</span></span></code></pre>
+</div>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Diff in Props - Opponent Campaign Spending and General Election Win</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0.3108487</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>opp_spending_diff_p</span>, col.names <span class='op'>=</span> <span class='st'>"P-Value of Opponent Spending"</span><span class='op'>)</span></span></code></pre>
+</div>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">P-Value of Opponent Spending</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ol start="4" type="1">
+<li>Conclusion Section
+Throughout this research study I have attempted to analyze whether a woman candidate’s political affiliation affects if they are to be elected into a congressional office. I analyzed whether their political affiliation, whether Democrat or Republican, would have affected the percentile amount of votes received in general elections. I have found that Democrat women have typically received more percentage point votes compared to Republican women, however that did not fully affirm that political affiliation determines the outcome of general election races. I then chose to analyze difference independent variables in order to narrow down factors as to why women are less represented in Congress. Basing my research off of Bucchianeri’s study, I looked at the amount of Campaign Funds that each Candidate and their opponent had, and tried to find the relationship between those who spent more than 50,000 dollars and those who spent less than that to the results of their general election race. From this analysis, I have concluded that there is little correlation to campaign spending and general election results. For the majority of this study, I tried to steer clear of bias and whether voters simply did not choose a candidate because of gender in order to give the benefit of the doubt to voters across all political spectrums. It is of my belief that voters should not choose candidates simply because of gender, however that is certainly not the case in the United States. If I were to improve my analysis, I would like to perhaps include a thermomenter as to how voters in different states with different political affiliations may perceive women in government, or women in higher positions/ male-dominated fields in general. Although the two independent variables I analyzed did not produce the results of my hypothesis, perhaps other factors like candidate quality or popularity might influence why women aren’t elected into office as often as men are.</li>
+</ol>
 <p>Bucchianeri, Peter, 2017, “Replication Data for: Is Running Enough? Reconsidering the Conventional Wisdom about Women Candidates”, <a href="https://doi.org/10.7910/DVN/CFPBRI" class="uri">https://doi.org/10.7910/DVN/CFPBRI</a>, Harvard Dataverse, V1, UNF:6:8dMni+j6pH3qaRJBnPC/BQ== [fileUNF]</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
