@@ -1,13 +1,13 @@
 ---
 title: "PS270 Final Project"
 author: "Anna Jyi"
-description: "My final project"
+description: "My Final Project"
 output:
   distill::distill_article:
     self_contained: false
 ---
 
-(1) Introduction
+(1) Introduction:
 
   Are voters hesitant to elect women into government? After Vice President Kamala Harris lost her Presidential Race, many opinions about her loss had to do with the fact that she is a woman and that the United States is generally not ready to have a woman as the President. In this study, I plan to analyze the reasons behind why women are less likely to be elected into government. I hypothesize that a woman's political affiliation is a correlating factor to why there is a lack of women in Congress. Additionally, a candidate's campaign spending compared to their opponent may positively or negatively affect the success of her campaign. The dataset that I am using analyzes every woman who has ever run for a position in the House of Representatives from 1972-2010. I think that this particular research topic is interesting because this past semester I had worked on the field campaigning for Kamala Harris and Tammy Baldwin, and after having seen the results of election, it made me wonder what certain factors contributed to the reason why Baldwin was elected and Harris was not. On the broader scale, it is interesting to see the influence of personal and emotional ties to why voters choose to elect certain candidates. 
 
@@ -101,7 +101,8 @@ knitr::kable(opp_spending_diff_p, col.names = "P-Value of Opponent Spending")
 
 ```
 
-(4) Conclusion Section 
+(4) Conclusion Section:
+
 Throughout this research study I have attempted to analyze whether a woman candidate's political affiliation affects if they are to be elected into a congressional office. I analyzed whether their political affiliation, whether Democrat or Republican, would have affected the percentile amount of votes received in general elections. I have found that Democrat women have typically received more percentage point votes compared to Republican women, however that did not fully affirm that political affiliation determines the outcome of general election races. I then chose to analyze difference independent variables in order to narrow down factors as to why women are less represented in Congress. Basing my research off of Bucchianeri's study, I looked at the amount of Campaign Funds that each Candidate and their opponent had, and tried to find the relationship between those who spent more than 50,000 dollars and those who spent less than that to the results of their general election race. From this analysis, I have concluded that there is little correlation to campaign spending and general election results. For the majority of this study, I tried to steer clear of bias and whether voters simply did not choose a candidate because of gender in order to give the benefit of the doubt to voters across all political spectrums. It is of my belief that voters should not choose candidates simply because of gender, however that is certainly not the case in the United States. If I were to improve my analysis, I would like to perhaps include a thermomenter as to how voters in different states with different political affiliations may perceive women in government, or women in higher positions/ male-dominated fields in general. Although the two independent variables I analyzed did not produce the results of my hypothesis, perhaps other factors like candidate quality or popularity might influence why women aren't elected into office as often as men are. 
 
 
