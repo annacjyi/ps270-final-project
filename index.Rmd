@@ -1,14 +1,72 @@
 ---
 title: "PS270 Final Project"
-author: "Your Name Here"
+author: "Anna Jyi"
 description: "My final project"
 output:
   distill::distill_article:
     self_contained: false
 ---
 
-
-
-## Project thoughts
+## Milestone 1 - Project thoughts
 
 I'm not sure if I need to stay within the realm of Political Science, but I would be interested in conducting research on the demographics of the Democratic Party and how these demographics affect the way a person identifies themselves across the political spectrum from moderate to extreme.  
+
+## Milestone 2 
+
+Are voters hesitant to elect women into government? After Vice President Kamala Harris lost her Presidential Race many opinions about her loss had to do with the fact that she is a woman, and that the United States is generally not ready to have a woman as the President of the United States. In this study, I plan to analyze the reasons behind why women are less likely to be elected into government. I hypothesize that the consideration of a candidate's gender can either encourage or deter voters from electing women into Congress. Additionally, a woman's political party affiliation as a Democrat or Republican may positively or negatively affect the success of her campaign. The dataset that I am using analyzes every woman who has ever run for a position in the House of Representatives from 1972-2010. The explanatory variable that I will be analyzing is the rate at which women run for office versus the rate at which men run for office. The explanatory variable is coded =1 for women and =0 for men.The outcome variable is the successful election of a woman into the House of Representatives, which is coded =1 for a win and =0 for a loss. The variables are based off of Peter Bucchianeri's data set that analyzes the rate at which Republican women win primary elections but not general elections for several reasons including the hesitancy of their districts to elect a woman into office. My study will only look at the results of general elections.  
+
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(doBy)
+library(gridExtra)
+library(mvtnorm)
+library(stargazer)
+library(interplot)
+library(coin)
+
+wd <- "/Users/annajyi/PS270 Final Project"  
+
+getwd()
+
+figure_dir <- paste0("Bucchianeri_PB_Replication_Data.csv", "/Bucchianeri Data/")
+if(dir.exists(figure_dir) == FALSE){
+  dir.create(figure_dir)
+}
+
+women_gov <- read_csv("Bucchianeri Data/Bucchianeri_PB_Replication_Data.csv")
+```
+
+
+## Milestone 3 
+```{r}
+women_gov_1 <- women_gov|>
+  mutate(pol_aff = if_else(party == "D", "Democrat", "Republican"),
+         success = if_else(GenWin == 1, "Won General Election", "Lost General Election"))|>
+  group_by(pol_aff, success)|>
+  summarize(win_perc = mean(candpct)) 
+  
+women_gov_1 |>
+  ggplot(mapping = aes(x = pol_aff, 
+                       y = win_perc), 
+                       fill = pol_aff) + 
+  geom_col(position = "dodge") + 
+  labs(title = "Candidate Percentage of Women's Congressional Races Based on Political Party", 
+       x = "Political Affiliation",
+       y = "Success of Race") +
+  scale_fill_manual(values = c("Democrat" = "steelblue1", "Republican" = "indianred1"))
+
+knitr::kable(women_gov_1, digits = 3, col.names = c("Political Affiliation","Success of Race","Average Percentage of Candidate Votes"))
+```
+## Milestone 4
+
+
+## Final Report 
+Introduction: describe the research question and main hypothesis; describe why it is important. (1-2 paragraphs) (2pts)
+Data section: 2-3 paragraphs + plot visualizing main outcome of interest. (3pts)
+Results section: plot of main analysis + regression output + 2-3 paragraphs of description and interpretation of the plots and regression (including interpreting the main coefficient of interest and describing if it is statistically significant and if we should interpret it causally). This section could be longer if you choose to include additional analyses. (8pts)
+Conclusion section: 1 paragraph (i) summarizing results and assessing the extent to which you find support for your hypothesis; (ii) describing limitations of the analysis and threats to inference (missing data, confounding, etc), and stating how you could improve your analysis if you had more time/money. (2pts)
+
+
+Bucchianeri, Peter, 2017, "Replication Data for: Is Running Enough? Reconsidering the Conventional Wisdom about Women Candidates", https://doi.org/10.7910/DVN/CFPBRI, Harvard Dataverse, V1, UNF:6:8dMni+j6pH3qaRJBnPC/BQ== [fileUNF]
