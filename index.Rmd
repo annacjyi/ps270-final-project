@@ -7,33 +7,20 @@ output:
     self_contained: false
 ---
 
-## Milestone 1 - Project thoughts
+(1) Introduction:
 
-I'm not sure if I need to stay within the realm of Political Science, but I would be interested in conducting research on the demographics of the Democratic Party and how these demographics affect the way a person identifies themselves across the political spectrum from moderate to extreme.  
+  Are voters hesitant to elect women into government? After Vice President Kamala Harris lost her Presidential Race many opinions about her loss had to do with the fact that she is a woman, and that the United States is generally not ready to have a woman as the President of the United States. In this study, I plan to analyze the reasons behind why women are less likely to be elected into government. I hypothesize that the consideration of a candidate's gender can either encourage or deter voters from electing women into Congress. Additionally, a woman's political party affiliation as a Democrat or Republican may positively or negatively affect the success of her campaign. The dataset that I am using analyzes every woman who has ever run for a position in the House of Representatives from 1972-2010. The explanatory variable that I will be analyzing is the rate at which women run for office versus the rate at which men run for office. The explanatory variable is coded =1 for women and =0 for men.The outcome variable is the successful election of a woman into the House of Representatives, which is coded =1 for a win and =0 for a loss. The variables are based off of Peter Bucchianeri's data set that analyzes the rate at which Republican women win primary elections but not general elections for several reasons including the hesitancy of their districts to elect a woman into office. My study will only look at the results of general elections.  
 
-## Milestone 2 
-
-Are voters hesitant to elect women into government? After Vice President Kamala Harris lost her Presidential Race many opinions about her loss had to do with the fact that she is a woman, and that the United States is generally not ready to have a woman as the President of the United States. In this study, I plan to analyze the reasons behind why women are less likely to be elected into government. I hypothesize that the consideration of a candidate's gender can either encourage or deter voters from electing women into Congress. Additionally, a woman's political party affiliation as a Democrat or Republican may positively or negatively affect the success of her campaign. The dataset that I am using analyzes every woman who has ever run for a position in the House of Representatives from 1972-2010. The explanatory variable that I will be analyzing is the rate at which women run for office versus the rate at which men run for office. The explanatory variable is coded =1 for women and =0 for men.The outcome variable is the successful election of a woman into the House of Representatives, which is coded =1 for a win and =0 for a loss. The variables are based off of Peter Bucchianeri's data set that analyzes the rate at which Republican women win primary elections but not general elections for several reasons including the hesitancy of their districts to elect a woman into office. My study will only look at the results of general elections.  
-
+(2) Data Description:
 
 ```{r}
 library(tidyverse)
 library(ggplot2)
-library(doBy)
-library(gridExtra)
-library(mvtnorm)
-library(stargazer)
-library(interplot)
-library(coin)
 
 wd <- "/Users/annajyi/PS270 Final Project"  
-
-getwd()
-
 figure_dir <- paste0("Bucchianeri_PB_Replication_Data.csv", "/Bucchianeri Data/")
 if(dir.exists(figure_dir) == FALSE){
-  dir.create(figure_dir)
-}
+  dir.create(figure_dir)}
 
 women_gov <- read_csv("Bucchianeri Data/Bucchianeri_PB_Replication_Data.csv")
 ```
@@ -59,8 +46,17 @@ women_gov_1 |>
 
 knitr::kable(women_gov_1, digits = 3, col.names = c("Political Affiliation","Success of Race","Average Percentage of Candidate Votes"))
 ```
-## Milestone 4
+## Milestone 4 - Second Visualization (Regression Model)
+```{r}
+women_gov_2 <- women_gov |>
+  ggplot(mapping = aes(x = StPOAbrv, y = GenVote)) + 
+  geom_point(color = "indianred1") +
+  labs(x = "Candidate's State, Abbreviated", 
+       y = "Percentage of General Vote per Candidate")
 
+women_gov_2
+```
+Based on the results from the first visualization, in both Democratic and Republican political parties, women are shown to earn less than 50% of their candidate vote. Although this visual comparison of these two variables is not enough to support my hypothesis that a candidate's gender affects the outcome of their race, this regression model shows the relationship between the states in which a candidate ran her race and the number of general votes that a candidate received represented by a percentile. In certain states we can see that the majority of points plotted on the regression model indicate that women candidates in that state received 50% or more of the general votes, like in Illinois or California. Since these states are historically Democratic, this further strengthens the argument that a woman candidate's political affiliation can affect the results of her congressional race outcome.  
 
 ## Final Report 
 Introduction: describe the research question and main hypothesis; describe why it is important. (1-2 paragraphs) (2pts)
